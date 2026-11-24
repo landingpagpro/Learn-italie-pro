@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm install --include=dev",
+  "buildCommand": "npm install --include=dev && npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30,
+      "includeFiles": "public/logos/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index?__path=:path*"
+    },
+    {
+      "source": "/logos",
+      "destination": "/logos/index.html"
+    },
+    {
+      "source": "/logos/",
+      "destination": "/logos/index.html"
+    },
+    {
+      "source": "/((?!api/|assets/|logos/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
